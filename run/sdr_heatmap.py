@@ -6,7 +6,7 @@ import subprocess
 import shlex
 import csv
 import os
-
+from time import sleep
 
 
 def run(min_freq, max_freq,time):
@@ -68,11 +68,16 @@ def run(min_freq, max_freq,time):
     plt.tight_layout()
     main_title = main_title.replace(" ","_")
     plt.savefig(main_title, format = 'png')
+    plt.close(main_title)
     mv = subprocess.call(["mv",main_title,"data/"+ folder + "/"])
 
 
 
 if __name__ == '__main__':
-    min_freq = str(400)
-    max_freq = str(450)
-    run(min_freq, max_freq,time= datetime.now())
+    GNNS_frequencies = {"L1": ("1550","1600"), "L2": ("1210", "1240"), "L5":("1150","1200"), "E1": ("1560","1590"), "E5":("1160","1200"), "E6": ("1260","1300")}
+    while True:
+        for v in GNNS_frequencies.values():
+        	print("scanning from" + v[0] + " MHz to " + v[1] +" MHz ")
+        	run(min_freq=v[0], max_freq=v[1],time=datetime.now())
+        print("wainting for next sweep")
+        sleep(600)
