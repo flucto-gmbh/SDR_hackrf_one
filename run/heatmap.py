@@ -7,19 +7,20 @@ import shlex
 import csv
 import os
 
-date = str(datetime.now())
-datetime = date.replace(" ", "_")
-datetime = datetime.replace(":", "_")
-filename = str(datetime+".csv")
 min_freq = str(150)
 max_freq = str(200)
-dir = "/" + datetime 
+date = str(datetime.now())
+datetime = date.replace(" ", "_")
 
-dir = subprocess.call(["mkdir", datetime])
+ 
+folder = datetime.replace(":", "_") + "-" + min_freq + "MHz-" + max_freq + "MHz"
+filename = str(datetime+".csv")
+
+dir = subprocess.call(["mkdir","data/"+ folder])
 sweep = subprocess.call(["./sweep.sh", min_freq, max_freq,filename])
-mv = subprocess.call(["mv",filename,  datetime + "/"])
+mv = subprocess.call(["mv",filename, "data/" + folder + "/"])
 
-df = pd.read_csv(datetime+ "/"+ filename)
+df = pd.read_csv("data/" + folder+ "/"+ filename)
 
 
 first_row = ["timestamp","time", "min","max", "width","num"]
@@ -66,4 +67,4 @@ plt.ylabel ("Timestamp")
 plt.tight_layout()
 main_title = main_title.replace(" ","_")
 plt.savefig(main_title, format = 'png')
-mv = subprocess.call(["mv",main_title,  datetime + "/"])
+mv = subprocess.call(["mv",main_title,"data/"+ folder + "/"])
