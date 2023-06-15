@@ -74,10 +74,10 @@ def run(min_freq, max_freq,time):
 
 
 if __name__ == '__main__':
-    GNNS_frequencies = {"L1": ("1550","1600"), "L2": ("1210", "1240"), "L5":("1150","1200"), "E1": ("1560","1590"), "E5":("1160","1200"), "E6": ("1260","1300")}
+    GNNS_frequencies = {"L1": ("1550","1600"), "L2": ("1210", "1240"), "L5":("1150","1200"), "GL1": ("1580","1620"), "GL2":("1230","1260"), "GL3": ("1190","1220")}
     while True:
         for v in GNNS_frequencies.values():
         	print("scanning from" + v[0] + " MHz to " + v[1] +" MHz ")
         	run(min_freq=v[0], max_freq=v[1],time=datetime.now())
-        print("wainting for next sweep")
-        sleep(600)
+        #print("wainting for next sweep")
+        #sleep(600)
